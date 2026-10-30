@@ -1,0 +1,59 @@
+name: Publish digest preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      include_marker:
+        description: Include the lane marker (only for approved initial review)
+        type: boolean
+        required: true
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test && pnpm typecheck
+      - name: Export the running service's digest
+        env:
+          LANE_MARKER: ${{ inputs.include_marker && secrets.LANE_MARKER || '' }}
+          INCLUDE_MARKER: ${{ inputs.include_marker }}
+        run: |
+          if [ "$INCLUDE_MARKER" = true ] && [ -z "$LANE_MARKER" ]; then
+            echo 'The initial review requires the LANE_MARKER secret.' >&2
+            exit 1
+          fi
+          node scripts/export-preview.mjs "$RUNNER_TEMP/rig-preview"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ runner.temp }}/rig-preview
+          retention-days: 1
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the approved preview
+        id: deployment
+        uses: actions/deploy-pages@v4
