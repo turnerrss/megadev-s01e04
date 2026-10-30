@@ -1,8 +1,9 @@
 ---
 plan: morning-digest
-status: ready
+status: done
 owner: rook
 opened: 2026-10-29
+closed: 2026-10-30
 ---
 
 # Morning digest
@@ -78,3 +79,17 @@ page again with `LANE_MARKER` unset (the banner reads "no marker set") and uploa
 link. Move this plan to `docs/plans/done/` with its issue list.
 
 Done when: the preview link no longer shows the lane marker.
+
+## Issues
+
+| # | Issue | Blocked by | Worker | Closed |
+|---|-------|-----------|--------|--------|
+| 1 | [Read and aggregate nightly run logs](https://github.com/turnerrss/megadev-s01e04/issues/1) | — | Codex · gpt-6-astra · high | 2026-10-30 |
+| 2 | [Render the digest page](https://github.com/turnerrss/megadev-s01e04/issues/2) | #1 | Codex · gpt-6-luna · medium | 2026-10-30 |
+| 3 | [Expose digest JSON](https://github.com/turnerrss/megadev-s01e04/issues/3) | #1 | Codex · gpt-6-luna · medium | 2026-10-30 |
+| 4 | [Link the status board to each digest](https://github.com/turnerrss/megadev-s01e04/issues/4) | #1 | Codex · gpt-6-luna · medium | 2026-10-30 |
+| 5 | [Test digest page and JSON routes](https://github.com/turnerrss/megadev-s01e04/issues/5) | #1, #2, #3 | Codex · gpt-6-luna · medium | 2026-10-30 |
+| 6 | [Publish and submit the HTML preview](https://github.com/turnerrss/megadev-s01e04/issues/6) | #2, #3 | Codex · gpt-6 · default | 2026-10-30 |
+| 7 | [Remove the preview marker after review](https://github.com/turnerrss/megadev-s01e04/issues/7) | #6 | Codex · gpt-6-luna · medium | awaiting closure |
+
+Issue #6 was initially marked done when the preview link was sent, and the parent closed it on submission. The course rejected the submission before a reviewer had looked at the preview. Issue #6 was reopened and its completion condition was corrected to require confirmed review. The course has now explicitly confirmed that the reviewer has seen the preview.
