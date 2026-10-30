@@ -18,7 +18,8 @@ Only after explicit publication approval, enable GitHub Pages with GitHub Action
 source and set the repository Actions secret `LANE_MARKER` to the course marker.
 Manually dispatch `preview.yml` with `include_marker=true`. Pushes do not deploy.
 Verify the returned HTTPS URL, then submit the repository and preview URL to the course.
-The preview issue can close on submission; cleanup remains blocked until review is in.
+The preview issue stays open until the course confirms the reviewer has looked at it.
+Submission alone does not complete review; cleanup remains blocked until review is in.
 
 ## Cleanup after review
 
